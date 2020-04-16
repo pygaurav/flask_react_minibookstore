@@ -58,6 +58,23 @@ class BookModel():
             return finalarr
         except:
             return None
+    
+    @staticmethod
+    def get_slot_books(value):
+        try:
+            conn = connect_to_db()
+            cur = conn.cursor()
+            command = "SELECT * from books LIMIT 10 OFFSET "+str(value)
+            cur.execute(command)
+            resarr = cur.fetchall()
+            finalarr = []
+            if resarr:
+                for i in resarr:
+                    bo = BookModel(*i)
+                    finalarr.append(bo.__dict__)
+            return finalarr
+        except:
+            return None
 
     @classmethod
     def get_book_by_id(cls, id):

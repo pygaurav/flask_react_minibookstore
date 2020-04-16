@@ -6,6 +6,13 @@ from app.db.book_model import BookModel
 def index():
     return '<h1>Loaded</h1>'
 
+@app.route('/api/fetch_book_slot/<int:value>',methods=['GET'])
+def get_n_records(value):
+    finalarr = BookModel.get_slot_books(value)
+    if not finalarr is None:
+        return jsonify({"results":finalarr})
+    return jsonify({"Error":"Some Error occured at backend"}),400
+
 @app.route('/api/fetch_books', methods=['GET'])
 def get_books():
     finalarr = BookModel.get_all_books()
